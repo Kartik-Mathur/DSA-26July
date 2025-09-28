@@ -34,8 +34,8 @@ void mergeSort(int *a, int s, int e) {
 		c[i] = a[i];
 	}
 	// 2. Sort
-	mergeSort(b, s, mid);
-	mergeSort(c, mid + 1, e);
+	mergeSort(b, s, mid); // PURE ASSUMPTION
+	mergeSort(c, mid + 1, e); // PURE ASSUMPTION
 	// 3. Merge
 	merge(a, b, c, s, e);
 }
