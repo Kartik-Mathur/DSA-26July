@@ -79,6 +79,27 @@ void levelOrderTraversal(node* root) {
 	}
 }
 
+node *searchNode(node*root, int key) {
+	// base case
+	if (root == NULL) {
+		return NULL;
+	}
+
+	// recursive case
+	if (root->data == key) { // Agr root hi key ke barabar toh mill gaya return krdo root ko
+		return root;
+	}
+
+	node* leftAns = searchNode(root->left, key);
+	if (leftAns != NULL) { // iska mtlb left mei key mill gai
+		return leftAns;
+	}
+
+	// Agar leftAns == NULL toh RST mei dekho ho skta hai waha ho
+	node* rightAns = searchNode(root->right, key);
+	return rightAns; // Agar right se ans aaya toh theek nhi aaya toh ab key nhi hai tree mei
+}
+
 int main() {
 	int in[] = {1, 10, 4, 6, 7, 8, 3, 13, 14};
 	int n = sizeof(in) / sizeof(int);
