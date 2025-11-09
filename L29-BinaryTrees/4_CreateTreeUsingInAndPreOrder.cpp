@@ -79,7 +79,7 @@ void levelOrderTraversal(node* root) {
 	}
 }
 
-node *searchNode(node*root, int key) {
+node* searchNode(node*root, int key) {
 	// base case
 	if (root == NULL) {
 		return NULL;
@@ -107,6 +107,13 @@ int main() {
 	node* root = createTree(in, 0, n - 1);
 
 	levelOrderTraversal(root);
+	node* ans = searchNode(root, 140);
+	if (ans == NULL) {
+		cout << "NOT FOUND\n";
+	}
+	else {
+		cout << ans->data << "\n";
+	}
 
 
 
