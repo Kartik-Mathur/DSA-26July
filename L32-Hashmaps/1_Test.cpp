@@ -97,6 +97,32 @@ public:
 			cout << endl;
 		}
 	}
+
+	node* search(string key) {
+		int indx = hashFn(key);
+		node* head = a[indx];
+		while (head != NULL) {
+			if (head->key == key) {
+				return head;
+			}
+
+			head = head->next;
+		}
+
+		return NULL;
+	}
+	// Operator overloading of []
+	int& operator[](string key) {
+		node* ans = search(key);
+		if (ans == NULL) { // Insertion
+			int x = -1;
+			insert(key, x);
+			ans = search(key);
+		}
+
+		return ans -> value;
+
+	}
 };
 
 int main() {
@@ -107,8 +133,21 @@ int main() {
 	h.insert("Kiwi", 50);
 	h.insert("pineapple", 50);
 	h.insert("banana", 150);
-	h.print();
+	// h.print();
 
+
+	h["orange"] = 100; // Insertion
+	h["orange"] = 120; // Updation
+	cout << h["orange"] << endl; // Search
+	// h.print();
+
+	// node* ans = h.search("Apple");
+	// if (ans != NULL) {
+	// 	cout << ans->key << ", " << ans->value << endl;
+	// }
+	// else {
+	// 	cout << "NOT FOUND\n";
+	// }
 
 
 
