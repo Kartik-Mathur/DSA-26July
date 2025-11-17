@@ -4,10 +4,12 @@ using namespace std;
 class node {
 public:
 	string key;
-	int data;
+	int value;
+	node* next;
 	node(string k, int d) {
 		key = k;
-		data = d;
+		value = d;
+		next = NULL;
 	}
 };
 
@@ -21,7 +23,7 @@ private:
 		{
 			ans += (key[i] % ts * mul % ts) % ts;
 			mul *= 13;
-			mul %= ts
+			mul %= ts;
 		}
 
 		return ans % ts;
@@ -83,13 +85,80 @@ public:
 		}
 	}
 
+	void print() {
+		for (int i = 0; i < ts; ++i)
+		{
+			node* head = a[i];
+			cout << i << " : ";
+			while (head != NULL) {
+				cout << "(" << head->key << ", " << head->value << ") ";
+				head = head->next;
+			}
+			cout << endl;
+		}
+	}
 
+	node* search(string key) {
+		int indx = hashFunction(key);
+		node* head = a[indx];
+
+		while (head != NULL) {
+			if (head -> key == key) {
+				return head;
+			}
+
+			head = head->next;
+		}
+
+		return NULL; // If no key was found so return NULL
+	}
+
+	int& operator[](string key) {
+		node* ans = search(key);
+
+		if (ans == NULL) { // This key is not present inside the hashtable
+			insert(key, -1); // -1 is the garbage value
+			ans = search(key);
+		}
+
+		// Yaha par ans bucket will have the address
+		return ans->value;
+	}
+
+	void update(string key, int value) {
+		node* ans = search(key);
+		if (ans == NULL) {
+			insert(key, value);
+			ans = search(key);
+		}
+		ans -> value = value;
+	}
+	// void delete(string key){ } // HOMEWORK
 };
 
 int main() {
 
 	hashmap h;
+	h.insert("mango", 100);
+	h.insert("apple", 120);
+	h.insert("kiwi", 20);
+	h.insert("guava", 210);
+	// h.insert("orange", 22);
 
+	h["orange"] = 22; // Insertion
+	h["orange"] = 200; // Updation
+
+	h.update("orange", 220);
+	cout << h["orange"] << endl; // 200
+
+	h.print();
+	// node* ans = h.search("Orange");
+	// if (ans != NULL) {
+	// 	cout << ans->key << ", " << ans->value << endl;
+	// }
+	// else {
+	// 	cout << "Key not found\n";
+	// }
 
 	return 0;
 }
